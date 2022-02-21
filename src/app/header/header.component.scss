@@ -1,0 +1,6 @@
+@import '../../variables.scss';
+app-header {
+    &__header {
+        background-color: $primary-color;
+    }
+}
