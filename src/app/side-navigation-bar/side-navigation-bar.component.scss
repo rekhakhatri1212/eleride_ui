@@ -4,12 +4,15 @@
     &__container {
         margin-left: 0;
     }
-    &__menu-item-icon {
+    .menu-item-icon {
         font-size: 18px !important;
         color: $secondary-color;
         padding: 20px 10px 20px 32px !important;
     }
-    &__menu-item-text {
+    .menu-item-text {
+        margin-left: 20px;
+    }
+    .sign-up-button {
         margin-left: 20px;
     }
 }

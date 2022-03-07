@@ -1,4 +1,4 @@
-<div class="sidebar-nav">
+<div class="sidebar-nav side-navigation-bar">
     <nav class="navbar fixed-top navbar-background">
         <div class="container side-navigation-bar__container">
             <!-- Mobile Menu Toggle Button -->
@@ -10,17 +10,17 @@
             <div class="offcanvas offcanvas-start shadow" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
               <div>
                     <ul class="navbar-nav">
-                        <li><a href="#" class="side-navigation-bar__menu-item-icon"><i class="fa fa-home"></i><span class="side-navigation-bar__menu-item-text">Home</span></a></li>
-                        <li><a href="#" class="side-navigation-bar__menu-item-icon"><i class="fa fa-car"></i><span class="side-navigation-bar__menu-item-text">Cars</span></a></li>
-                        <li><a href="#" class="side-navigation-bar__menu-item-icon"><i class="fa fa-list"></i><span class="side-navigation-bar__menu-item-text">My Subscriptions</span></a></li>
-                        <li><a href="#" class="side-navigation-bar__menu-item-icon"><i class="fa fa-info-circle"></i><span class="side-navigation-bar__menu-item-text">About Us</span></a></li>
-                        <li><a href="#" class="side-navigation-bar__menu-item-icon"><i class="fa fa-street-view"></i><span class="side-navigation-bar__menu-item-text">Network</span></a></li>
-                        <li><a href="#" class="side-navigation-bar__menu-item-icon"><i class="fa fa-phone-square"></i><span class="side-navigation-bar__menu-item-text">Help/Support</span></a></li>
+                        <li><a href="#home" class="menu-item-icon"><i class="fa fa-home"></i><span class="menu-item-text">Home</span></a></li>
+                        <li><a href="#cars" class="menu-item-icon"><i class="fa fa-car"></i><span class="menu-item-text">Cars</span></a></li>
+                        <li><a href="#my-subscriptions" class="menu-item-icon"><i class="fa fa-list"></i><span class="menu-item-text">My Subscriptions</span></a></li>
+                        <li><a href="#about-us" class="menu-item-icon"><i class="fa fa-info-circle"></i><span class="menu-item-text">About Us</span></a></li>
+                        <li><a href="#network" class="menu-item-icon"><i class="fa fa-street-view"></i><span class="menu-item-text">Network</span></a></li>
+                        <li><a href="#help-support" class="menu-item-icon"><i class="fa fa-phone-square"></i><span class="menu-item-text">Help/Support</span></a></li>
                     </ul>
               </div>
             </div>
   
-            <div class="btn-group">
+            <div class="btn-group" >
                 <!-- <a href="#" class="dropdown-toggle text-white text-decoration-none" data-bs-toggle="dropdown" aria-expanded="false">
                     <span class="usericon"><i class="bi bi-person-circle"></i></span>
                     <span class="textnone">Jassa</span>
@@ -32,8 +32,8 @@
                     <li><hr class="dropdown-divider"></li>
                     <li><button class="dropdown-item" type="button"><i class="bi bi-box-arrow-right"></i> Sign out</button></li>
                 </ul> -->
-                <button class="btn btn-primary">Sign In</button>
-                <button class="btn btn-primary sign-up-button">Sign Up</button>
+                <button class="btn btn-primary" (click)="navigateToSignIn()">Sign In</button>
+                <button class="btn btn-primary sign-up-button" (click)="navigateToSignUp()">Sign Up</button>
             </div>
   
         </div>

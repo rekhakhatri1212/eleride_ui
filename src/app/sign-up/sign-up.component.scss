@@ -1,0 +1,28 @@
+@import '../../variables.scss';
+
+.sign-up {
+    margin-top: 100px;
+    .form-field-width {
+        width: 350px;
+    }
+    .sign-up-control {
+        height: 50px;
+    }
+    .subheading {
+        margin-bottom: 20px;
+    }
+    .sign-in-here-link {
+        color: $secondary-color;
+        cursor: pointer;
+        &:hover  {
+            text-decoration: underline;
+        }
+    }
+    .or-label {
+        margin-top: 20px;
+    }
+    .mat-form-field-label {
+        color: green !important;
+        font-size: 20px;
+    } 
+}
