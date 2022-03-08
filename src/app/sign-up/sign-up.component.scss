@@ -1,12 +1,12 @@
 @import '../../variables.scss';
 
 .sign-up {
-    margin-top: 100px;
+    margin-top: 80px;
     .form-field-width {
         width: 350px;
     }
     .sign-up-control {
-        height: 50px;
+        height: 45px;
     }
     .subheading {
         margin-bottom: 20px;
@@ -19,10 +19,7 @@
         }
     }
     .or-label {
-        margin-top: 20px;
+        margin-top: 10px;
+        margin-bottom: 10px;
     }
-    .mat-form-field-label {
-        color: green !important;
-        font-size: 20px;
-    } 
 }
