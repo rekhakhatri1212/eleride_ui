@@ -5,6 +5,7 @@ import {
   SocialAuthService,
   GoogleLoginProvider,
   SocialUser,
+  FacebookLoginProvider,
 } from 'angularx-social-login';
 
 @Component({
@@ -58,6 +59,10 @@ export class SignUpComponent implements OnInit {
 
   loginWithGoogle(): void {
     this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
+  }
+
+  loginWithFacebook(): void {
+    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
   }
 
 }
