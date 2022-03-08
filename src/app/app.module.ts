@@ -6,6 +6,7 @@ import {
   SocialLoginModule,
   SocialAuthServiceConfig,
   GoogleLoginProvider,
+  FacebookLoginProvider
 } from 'angularx-social-login';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -42,6 +43,10 @@ import { SignInComponent } from './sign-in/sign-in.component';
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider('1028958814213-fs6e3gs88k4kmu4tb5ksqeh7gubnav5r.apps.googleusercontent.com'),
           },
+          {
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider('269127302063153'),
+          }
         ],
       } as SocialAuthServiceConfig,
     },
