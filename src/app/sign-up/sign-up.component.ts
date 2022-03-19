@@ -7,6 +7,7 @@ import {
   SocialUser,
   FacebookLoginProvider,
 } from 'angularx-social-login';
+import { ConfirmValidParentMatcher, CustomValidators, errorMessages, regExps } from '../shared/custom-validator.sevice';
 
 @Component({
   selector: 'app-sign-up',
@@ -19,6 +20,8 @@ export class SignUpComponent implements OnInit {
   signUpForm: FormGroup;
   socialUser: SocialUser;
   isLoggedin: boolean;
+  errors = errorMessages;
+  confirmValidParentMatcher = new ConfirmValidParentMatcher();
 
   constructor(private formBuilder: FormBuilder, private socialAuthService: SocialAuthService) { 
     this.user = new User();
@@ -35,12 +38,15 @@ export class SignUpComponent implements OnInit {
       ]],
       'phoneNumber': [this.user.phoneNumber, [
         Validators.required,
-        Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")
+        Validators.pattern(regExps['phoneNumber'])
       ]],
-      'password': [this.user.password, [
-        Validators.required,
-        Validators.minLength(6)
-      ]]
+      passwordGroup: this.formBuilder.group({
+        password: [this.user.password, [
+            Validators.required,
+            Validators.pattern(regExps['password'])
+        ]],
+        confirmPassword: ['', Validators.required]
+    }, { validator: CustomValidators.childrenEqual}),
     });
 
     this.socialAuthService.authState.subscribe((user) => {

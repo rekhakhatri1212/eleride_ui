@@ -5,44 +5,61 @@
     <div class="subheading"><span>Already a member? </span><span class="sign-in-here-link">Please sign in here.</span>
     </div>
     <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
-        <div>
+        <div class="space-between-fields">
             <mat-form-field appearance="outline" class="form-field-width">
                 <mat-label>Name</mat-label>
                 <mat-placeholder class="placeholder">Enter your name</mat-placeholder>
                 <input type="text" id="name" matInput [(ngModel)]="user.name" formControlName="name">
                 <mat-error *ngIf="errorHandling('name', 'required')">
-                    Name is required
+                    {{ errors['name'] }}
                 </mat-error>
             </mat-form-field>
         </div>
-        <div>
+        <div class="space-between-fields">
             <mat-form-field appearance="outline" class="form-field-width">
                 <mat-label>Email Address</mat-label>
                 <mat-placeholder>Enter your email address</mat-placeholder>
                 <input type="email" id="email" matInput [(ngModel)]="user.email" formControlName="email">
-                <mat-error *ngIf="errorHandling('email', 'required')">
-                    Email address is required
-                </mat-error>
-                <mat-error *ngIf="errorHandling('email', 'email')">
-                    Email address is not correct (Example: abc@something)
+                <mat-error *ngIf="errorHandling('email', 'required') || errorHandling('email', 'email')">
+                    {{ errors['email'] }}
                 </mat-error>
             </mat-form-field>
         </div>
-        <div>
+        <div class="space-between-fields">
             <mat-form-field appearance="outline" class="form-field-width">
                 <mat-label>Phone Number</mat-label>
                 <mat-placeholder>Enter your phone number</mat-placeholder>
                 <input type="tel" id="phoneNumber" matInput [(ngModel)]="user.phoneNumber"
-                    formControlName="phoneNumber">
-                <mat-error *ngIf="errorHandling('phoneNumber', 'required')">
-                    Phone number is required
+                    formControlName="phoneNumber" [errorStateMatcher]="confirmValidParentMatcher">
+                <mat-error>
+                    {{ errors['phoneNumber'] }}
                 </mat-error>
-                <!-- <mat-error *ngIf="errorHandling('phoneNumber', 'email')">
-                    Phone Number is not correct. (Example: 8888888888 or 088888888 or +91-88888888)
-                </mat-error> -->
             </mat-form-field>
         </div>
-        <div>
+        <div formGroupName="passwordGroup">
+            <div class="space-between-fields">
+            <mat-form-field appearance="outline" class="form-field-width">
+                <mat-label>Password</mat-label>
+                <mat-placeholder>Enter your password</mat-placeholder>
+                <input type="password" id="password" matInput [(ngModel)]="user.password" formControlName="password">
+                <mat-error>
+                    {{ errors['password'] }}
+                </mat-error>
+            </mat-form-field>
+            </div>
+            <div class="space-between-fields">
+            <mat-form-field appearance="outline" class="form-field-width">
+                <mat-label>Confirm Password</mat-label>
+                <mat-placeholder>Confirm your password</mat-placeholder>
+                <input type="password" id="confirmPassword" matInput [(ngModel)]="user.confirmPassword"
+                       formControlName="confirmPassword" [errorStateMatcher]="confirmValidParentMatcher">
+                <mat-error>
+                    {{ errors['confirmPassword'] }}
+                </mat-error>
+            </mat-form-field>
+            </div>
+        </div>
+        <!-- <div>
             <mat-form-field appearance="outline" class="form-field-width">
                 <mat-label>Password</mat-label>
                 <mat-placeholder>Enter your password</mat-placeholder>
@@ -56,7 +73,7 @@
                 <input type="password" id="confirmPassword" matInput [(ngModel)]="user.password"
                     formControlName="password">
             </mat-form-field>
-        </div>
+        </div> -->
         <div>
             <button type="submit" class="btn app-btn-primary form-field-width sign-up-control">Sign up now</button>
         </div>
