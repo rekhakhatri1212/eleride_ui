@@ -7,7 +7,7 @@ import {
   SocialUser,
   FacebookLoginProvider,
 } from 'angularx-social-login';
-import { ConfirmValidParentMatcher, CustomValidators, errorMessages, regExps } from '../shared/custom-validator.sevice';
+import { ConfirmValidParentMatcher, CustomValidators, errorMessages, regExps } from '../shared/custom-validator.service';
 
 @Component({
   selector: 'app-sign-up',
