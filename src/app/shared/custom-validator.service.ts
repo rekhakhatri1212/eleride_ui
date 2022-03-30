@@ -25,6 +25,15 @@ export class ConfirmValidParentMatcher implements ErrorStateMatcher {
 }
 
 /**
+ * Custom ErrorStateMatcher which returns true (error exists) when the control is invalid and it has been touched
+ */
+ export class ConfirmValidMatcher implements ErrorStateMatcher {
+    isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+        return !!(control?.invalid && control?.touched);
+    }
+}
+
+/**
  * Collection of reusable RegExps
  */
 export const regExps: { [key: string]: RegExp } = {

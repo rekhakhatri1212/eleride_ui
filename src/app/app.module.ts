@@ -15,6 +15,15 @@ import { SideNavigationBarComponent } from './side-navigation-bar/side-navigatio
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { MaterialModule } from './material.module';
 import { SignInComponent } from './sign-in/sign-in.component';
+import { StoreModule } from '@ngrx/store';
+import { SignUpReducer } from './store/sign-up/sign-up.reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from 'src/environments/environment';
+import { EffectsModule } from '@ngrx/effects';
+import { SignUpEffects } from './store/sign-up/sign-up.effects';
+import { HttpClientModule } from '@angular/common/http';
+import { VerifyPhoneNumberComponent } from './verify-phone-number/verify-phone-number.component';
+import { reducers } from './models/app-state.model';
 
 @NgModule({
   declarations: [
@@ -22,16 +31,23 @@ import { SignInComponent } from './sign-in/sign-in.component';
     HeaderComponent,
     SideNavigationBarComponent,
     SignUpComponent,
-    SignInComponent
+    SignInComponent,
+    VerifyPhoneNumberComponent
   ],
   imports: [
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    EffectsModule.forRoot([
+      SignUpEffects
+    ]),
+    StoreModule.forRoot(reducers),
     BrowserModule,
     ReactiveFormsModule,
     FormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
-    SocialLoginModule
+    SocialLoginModule,
+    HttpClientModule
   ],
   providers: [
     {
