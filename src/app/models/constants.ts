@@ -1,0 +1,1 @@
+export const baseUrl = 'http://ec2-65-0-109-211.ap-south-1.compute.amazonaws.com:8080';

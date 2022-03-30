@@ -1,88 +1,70 @@
 <div class="sign-up text-center">
-    <div>
-        <h1>Sign Up</h1>
-    </div>
-    <div class="subheading"><span>Already a member? </span><span class="sign-in-here-link">Please sign in here.</span>
-    </div>
-    <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
-        <div class="space-between-fields">
-            <mat-form-field appearance="outline" class="form-field-width">
-                <mat-label>Name</mat-label>
-                <mat-placeholder class="placeholder">Enter your name</mat-placeholder>
-                <input type="text" id="name" matInput [(ngModel)]="user.name" formControlName="name">
-                <mat-error *ngIf="errorHandling('name', 'required')">
-                    {{ errors['name'] }}
-                </mat-error>
-            </mat-form-field>
-        </div>
-        <div class="space-between-fields">
-            <mat-form-field appearance="outline" class="form-field-width">
-                <mat-label>Email Address</mat-label>
-                <mat-placeholder>Enter your email address</mat-placeholder>
-                <input type="email" id="email" matInput [(ngModel)]="user.email" formControlName="email">
-                <mat-error *ngIf="errorHandling('email', 'required') || errorHandling('email', 'email')">
-                    {{ errors['email'] }}
-                </mat-error>
-            </mat-form-field>
-        </div>
-        <div class="space-between-fields">
-            <mat-form-field appearance="outline" class="form-field-width">
-                <mat-label>Phone Number</mat-label>
-                <mat-placeholder>Enter your phone number</mat-placeholder>
-                <input type="tel" id="phoneNumber" matInput [(ngModel)]="user.phoneNumber"
-                    formControlName="phoneNumber" [errorStateMatcher]="confirmValidParentMatcher">
-                <mat-error>
-                    {{ errors['phoneNumber'] }}
-                </mat-error>
-            </mat-form-field>
-        </div>
-        <div formGroupName="passwordGroup">
+    <div *ngIf="!isLoading">
+        <div><h1>Sign Up</h1></div>
+        <div class="subheading"><span>Already a member? </span><span class="sign-in-here-link">Please sign in here.</span></div>
+        <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
             <div class="space-between-fields">
-            <mat-form-field appearance="outline" class="form-field-width">
-                <mat-label>Password</mat-label>
-                <mat-placeholder>Enter your password</mat-placeholder>
-                <input type="password" id="password" matInput [(ngModel)]="user.password" formControlName="password">
-                <mat-error>
-                    {{ errors['password'] }}
-                </mat-error>
-            </mat-form-field>
+                <mat-form-field appearance="outline" class="form-field-width">
+                    <mat-label>Name</mat-label>
+                    <mat-placeholder class="placeholder">Enter your name</mat-placeholder>
+                    <input type="text" id="name" matInput [(ngModel)]="user.name" formControlName="name">
+                    <mat-error *ngIf="errorHandling('name', 'required')">
+                        {{ errors['name'] }}
+                    </mat-error>
+                </mat-form-field>
             </div>
             <div class="space-between-fields">
-            <mat-form-field appearance="outline" class="form-field-width">
-                <mat-label>Confirm Password</mat-label>
-                <mat-placeholder>Confirm your password</mat-placeholder>
-                <input type="password" id="confirmPassword" matInput [(ngModel)]="user.confirmPassword"
-                       formControlName="confirmPassword" [errorStateMatcher]="confirmValidParentMatcher">
-                <mat-error>
-                    {{ errors['confirmPassword'] }}
-                </mat-error>
-            </mat-form-field>
+                <mat-form-field appearance="outline" class="form-field-width">
+                    <mat-label>Email Address</mat-label>
+                    <mat-placeholder>Enter your email address</mat-placeholder>
+                    <input type="email" id="email" matInput [(ngModel)]="user.email" formControlName="email">
+                    <mat-error *ngIf="errorHandling('email', 'required') || errorHandling('email', 'email')">
+                        {{ errors['email'] }}
+                    </mat-error>
+                </mat-form-field>
             </div>
-        </div>
-        <!-- <div>
-            <mat-form-field appearance="outline" class="form-field-width">
-                <mat-label>Password</mat-label>
-                <mat-placeholder>Enter your password</mat-placeholder>
-                <input type="password" id="password" matInput [(ngModel)]="user.password" formControlName="password">
-            </mat-form-field>
+            <div class="space-between-fields">
+                <mat-form-field appearance="outline" class="form-field-width">
+                    <mat-label>Phone Number</mat-label>
+                    <mat-placeholder>Enter your phone number</mat-placeholder>
+                    <input type="tel" id="phoneNumber" matInput [(ngModel)]="user.phoneNumber"
+                        formControlName="phoneNumber" [errorStateMatcher]="confirmValidMatcher">
+                    <mat-error>{{ errors['phoneNumber'] }}</mat-error>
+                </mat-form-field>
+            </div>
+            <div formGroupName="passwordGroup">
+                <div class="space-between-fields">
+                    <mat-form-field appearance="outline" class="form-field-width">
+                        <mat-label>Password</mat-label>
+                        <mat-placeholder>Enter your password</mat-placeholder>
+                        <input type="password" id="password" matInput [(ngModel)]="user.password" formControlName="password">
+                        <mat-error>{{ errors['password'] }}</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="space-between-fields">
+                    <mat-form-field appearance="outline" class="form-field-width">
+                        <mat-label>Confirm Password</mat-label>
+                        <mat-placeholder>Confirm your password</mat-placeholder>
+                        <input type="password" id="confirmPassword" matInput [(ngModel)]="user.confirmPassword"
+                            formControlName="confirmPassword" [errorStateMatcher]="confirmValidParentMatcher">
+                        <mat-error>{{ errors['confirmPassword'] }}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div>
+                <button type="submit" class="btn app-btn-primary form-field-width sign-up-control">Sign up now</button>
+            </div>
+        </form>
+        <div class="or-label">or</div>
+        <div>
+            <button type="button" (click)="loginWithGoogle()" class="btn btn-danger form-field-width sign-up-control">Sign up with Gmail</button>
         </div>
         <div>
-            <mat-form-field appearance="outline" class="form-field-width">
-                <mat-label>Confirm Password</mat-label>
-                <mat-placeholder>Confirm your password</mat-placeholder>
-                <input type="password" id="confirmPassword" matInput [(ngModel)]="user.password"
-                    formControlName="password">
-            </mat-form-field>
-        </div> -->
-        <div>
-            <button type="submit" class="btn app-btn-primary form-field-width sign-up-control">Sign up now</button>
+            <button type="button" (click)="loginWithFacebook()" class="btn btn-primary form-field-width fb-sign-up-control">Sign up with Facebook</button>
         </div>
-    </form>
-    <div class="or-label">or</div>
-    <div>
-        <button type="button" (click)="loginWithGoogle()" class="btn btn-danger form-field-width sign-up-control">Sign up with Gmail</button>
     </div>
-    <div>
-        <button type="button" (click)="loginWithFacebook()" class="btn btn-primary form-field-width fb-sign-up-control">Sign up with Facebook</button>
-    </div>
+    <mat-spinner *ngIf="isLoading"
+                 color="accent"
+                 diameter="40"
+                 class="custom-mat-spinner"></mat-spinner>
 </div>

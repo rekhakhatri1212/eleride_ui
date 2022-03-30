@@ -1,8 +1,7 @@
-export class User {
-    id: number;
+export class SignUpFormControls {
     name: string;
     email: string;
-    phoneNumber: string;
+    phoneNumber: number;
     password: string;
     confirmPassword: string;
 }

@@ -1,13 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { User } from '../models/user.model';
+import { SignUpFormControls } from '../models/sign-up-form-controls.model';
 import {
   SocialAuthService,
   GoogleLoginProvider,
   SocialUser,
   FacebookLoginProvider,
 } from 'angularx-social-login';
-import { ConfirmValidParentMatcher, CustomValidators, errorMessages, regExps } from '../shared/custom-validator.service';
+import { ConfirmValidParentMatcher, ConfirmValidMatcher, CustomValidators, errorMessages, regExps } from '../shared/custom-validator.service';
+import { Store } from '@ngrx/store';
+import AppState from '../models/app-state.model';
+import { addUser } from '../store/sign-up/sign-up.actions';
+import { UsersVO } from '../models/users-vo.model';
+import { addingUserSelector, currentUserSelector } from '../store/sign-up/sign-up.selectors';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-sign-up',
@@ -16,16 +23,24 @@ import { ConfirmValidParentMatcher, CustomValidators, errorMessages, regExps } f
 })
 export class SignUpComponent implements OnInit {
 
-  user: User;
+  user: SignUpFormControls;
   signUpForm: FormGroup;
   socialUser: SocialUser;
   isLoggedin: boolean;
   errors = errorMessages;
   confirmValidParentMatcher = new ConfirmValidParentMatcher();
+  confirmValidMatcher =  new ConfirmValidMatcher();
+  currentUser$: Observable<UsersVO | null>;
+  addingUser$: Observable<boolean>;
+  isLoading: boolean;
 
-  constructor(private formBuilder: FormBuilder, private socialAuthService: SocialAuthService) { 
-    this.user = new User();
-   }
+  constructor(
+    private formBuilder: FormBuilder,
+    private socialAuthService: SocialAuthService,
+    private store: Store<AppState>,
+    private router: Router) {
+    this.user = new SignUpFormControls();
+  }
 
   ngOnInit(): void {
     this.signUpForm = this.formBuilder.group({
@@ -42,11 +57,11 @@ export class SignUpComponent implements OnInit {
       ]],
       passwordGroup: this.formBuilder.group({
         password: [this.user.password, [
-            Validators.required,
-            Validators.pattern(regExps['password'])
+          Validators.required,
+          Validators.pattern(regExps['password'])
         ]],
         confirmPassword: ['', Validators.required]
-    }, { validator: CustomValidators.childrenEqual}),
+      }, { validator: CustomValidators.childrenEqual }),
     });
 
     this.socialAuthService.authState.subscribe((user) => {
@@ -54,6 +69,7 @@ export class SignUpComponent implements OnInit {
       this.isLoggedin = user !== null;
       console.log(this.socialUser);
     });
+    this.subscribe();
   }
 
   /* Handle form errors */
@@ -61,7 +77,10 @@ export class SignUpComponent implements OnInit {
     return this.signUpForm.controls[control].hasError(error);
   }
 
-  onSubmit() {}
+  onSubmit() {
+    const user = new UsersVO(this.user);
+    this.store.dispatch(addUser({ user }));
+  }
 
   loginWithGoogle(): void {
     this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
@@ -71,4 +90,21 @@ export class SignUpComponent implements OnInit {
     this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
   }
 
+  navigateToVerifyPhoneNumberPage() {
+    this.router.navigate(['verify-phone-number']);
+  }
+
+  subscribe() {
+    this.addingUser$ = this.store.select(addingUserSelector)
+    this.addingUser$.subscribe(addingUser => {
+      this.isLoading = addingUser;
+    });
+
+    this.currentUser$ = this.store.select(currentUserSelector);
+    this.currentUser$.subscribe(currentUser => {
+      if (currentUser?.userId) {
+        this.navigateToVerifyPhoneNumberPage();
+      }
+    });
+  }
 }
